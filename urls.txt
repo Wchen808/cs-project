@@ -1,0 +1,3 @@
+https://en.wikipedia.org/wiki/Linux
+https://en.wikipedia.org/wiki/Package_manager
+2
