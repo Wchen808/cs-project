@@ -8,8 +8,8 @@ i used the graph model
 - Each article = a node (Node struct).
 - Each hyperlink from one article to another = a directed edge.
 
-Breadth-First Search (BFS)
-- We use Breadth-First Search (BFS) to find a path.
+BFS
+- BFS to find a path.
 - BFS explores in layers:
   - Start page = depth 0
   - Pages reachable in 1 click = depth 1
