@@ -476,32 +476,22 @@ int read_urls_from_file(const char *filename,
 
     char line[2048];
 
-    // Read start URL (line 1)
-    if (!fgets(line, sizeof(line), f)) {
-        fprintf(stderr, "urls.txt: missing start URL on line 1\n");
-        fclose(f);
-        return -1;
-    }
-    line[strcspn(line, "\r\n")] = '\0'; 
-    *start_out = normalize_full_url(line);
+    // Read each line in urls.txt
+    for (int i = 0; i < 3; i++) {
+        if (!fgets(line, sizeof(line), f)) {
+            fprintf(stderr, "urls.txt: missing value on line %d\n", i + 1);
+            fclose(f);
+            return -1;
+        }
+        line[strcspn(line, "\r\n")] = '\0';  // strip newline
 
-    // Read target URL (line 2)
-    if (!fgets(line, sizeof(line), f)) {
-        fprintf(stderr, "urls.txt: missing target URL on line 2\n");
-        fclose(f);
-        return -1;
+        switch (i) {
+            case 0: *start_out  = normalize_full_url(line); break;
+            case 1: *target_out = normalize_full_url(line); break;
+            case 2: *depth_out  = atoi(line); break;
+        }
     }
-    line[strcspn(line, "\r\n")] = '\0';
-    *target_out = normalize_full_url(line);
 
-    // Read depth (line 3)
-    if (!fgets(line, sizeof(line), f)) {
-        fprintf(stderr, "urls.txt: missing depth on line 3\n");
-        fclose(f);
-        return -1;
-    }
-    *depth_out = atoi(line);
-    
     fclose(f);
     return 0;
 }
